@@ -1,31 +1,34 @@
-import { StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Banner } from 'react-native-paper';
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+import PokemonDetails from '../../components/PokemonDetails';
+import { View } from '../../components/Themed';
+import { useGetFavouritePokemon } from '../../hooks/useGetFavouritePokemon';
 
-export default function TabOneScreen() {
+export default function FavouriteScreen() {
+  const router = useRouter();
+
+  const { favouritePokemonId } = useGetFavouritePokemon();
+
+  if (!favouritePokemonId) {
+    return (
+      <Banner
+        visible
+        actions={[
+          {
+            label: 'Find your Pokemon!',
+            onPress: () => router.push({ pathname: '/pokemons' }),
+          },
+        ]}
+      >
+        You don't have favourite Pokemon :(
+      </Banner>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <View>
+      <PokemonDetails id={favouritePokemonId} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
