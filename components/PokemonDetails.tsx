@@ -50,8 +50,6 @@ export default function PokemonDetails({ id }: PokemonDetailsProps) {
         <FontAwesome
           name={isFavourite ? 'heart' : 'heart-o'}
           size={25}
-          //color={Colors[colorScheme ?? 'light'].text}
-          //style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
           onPress={handlePress}
         />
       </View>
